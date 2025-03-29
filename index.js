@@ -1,6 +1,7 @@
 import express from 'express';
 import dotenv from 'dotenv';
 import authRouter from "../auth-backend/router/auth.route.js"
+import userRouter from "../auth-backend/router/users.router.js"
 import connectToMongoDB from "../auth-backend/db/connectToMongo.js"
 import cors from "cors"
 import cookieParser from "cookie-parser";
@@ -22,7 +23,7 @@ app.use(express.json()); // It parses the incoming request body, if any, and pop
 
 
 app.use('/auth', authRouter); // any requests whose path starts with /auth will be routed to the authRouter middleware for further processing
-// Define a route
+app.use('/users' , userRouter)
 app.get('/', (req, res) => {
   res.send('Congratulations HHLD Folks!');
 });
