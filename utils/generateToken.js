@@ -9,8 +9,12 @@ const generateJWTTokenAndSetCookie = (userId, res) => {
        maxAge: 15*24*60*60*1000, //miliseconds
        httpOnly: true,
        sameSite:"strict",
-       secure: false
+       secure: false,
+       path: "/"
    })
+
+   return token;
+
 }
 
 

@@ -12,9 +12,13 @@ dotenv.config();
 const app = express();
 const port = process.env.PORT || 5000; 
 
-app.use(cors());
 // Add cookie-parser middleware
 app.use(cookieParser());
+app.use(cors({
+  credentials: true,
+  origin: ["http://localhost:3000" , "http://localhost:3001" , "http://localhost:3002"]
+ }));
+ 
 
 
 connectToMongoDB();

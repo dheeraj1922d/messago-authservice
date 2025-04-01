@@ -14,9 +14,9 @@ export const signup = async (req, res) => {
       res.status(202).json({ message: "User already exists" });
     } else {
       const user = new User({ username: username, password: hashedPassword });
-      generateJWTTokenAndSetCookie(user._id, res);
+      const token = generateJWTTokenAndSetCookie(user._id, res);
       await user.save();
-      res.status(201).json({ message: "User created successfully!!" });
+      res.status(201).json({ message: "User created successfully!!" , token: token});
     }
   } catch (err) {
     console.log(err);
@@ -32,10 +32,11 @@ export const login = async (req, res) => {
     if (!user) return res.status(401).json({ error: "Auth failed" });
     const passwordMatch = await bcrypt.compare(password, user?.password || "");
     if (!passwordMatch) return res.status(401).json({ error: "Auth failed" });
-    generateJWTTokenAndSetCookie(user._id, res);
+    const token = generateJWTTokenAndSetCookie(user._id, res);
     res.status(200).json({
       _id: user._id,
       username: user.username,
+      token: token
     });
   } catch (error) {
     console.log(error.message);
